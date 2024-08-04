@@ -84,7 +84,7 @@ function Main({ setIsAuth }) {
 
   return (
     <div className="profile-main">
-      {showCreatePost && <CreatePost setShowCreatePost={setShowCreatePost} />}
+      {showCreatePost && <CreatePost setShowCreatePost={setShowCreatePost} userId={userInfo._id}/>}
       {showSearchPeople && <SearchPeople setShowSearchPeople={setShowSearchPeople} />}
       <Sidebar userInfo={userInfo} setShowCreatePost={setShowCreatePost} setShowSearchPeople={setShowSearchPeople}/>
       <NewsFeed userInfo={userInfo} followingUsersPosts={followingUsersPosts} />

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './SearchPeople.css';
+import { useNavigate } from 'react-router-dom';
 
 const SearchPeople = ({ setShowSearchPeople }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +29,7 @@ const SearchPeople = ({ setShowSearchPeople }) => {
         const data = await response.json();
         if (Array.isArray(data)) {
           setSearchResults(data);
+          console.log(searchResults)
         } else {
           setSearchResults([]);
         }
@@ -65,7 +68,7 @@ const SearchPeople = ({ setShowSearchPeople }) => {
               <div className="loader"></div>
             ) : searchResults.length > 0 ? (
               searchResults.map((result) => (
-                <p key={result._id}>{result.username}</p>
+                <p onClick={()=> {navigate(`/${result._id}`)}} key={result._id}>{result.username}</p>
               ))
             ) : (
               <p className="no-results">No results found</p>

@@ -21,11 +21,22 @@
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: auto;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative; /* Added for positioning the close button */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header {
@@ -59,8 +70,12 @@
   border-radius: 50%;
 }
 
-.content {
+.createpost-content {
   margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .icon-container {
@@ -83,16 +98,26 @@
   background-color: #007ac1;
 }
 
-.image-preview {
+.createpost-image-preview {
   margin-top: 20px;
   text-align: center;
 }
 
-.image-preview img {
+.createpost-image-preview img {
   max-width: 100%;
   max-height: 300px;
   border-radius: 8px;
   object-fit: contain;
+}
+
+.caption-input {
+  width: 90%;
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+  font-family: Arial, sans-serif;
 }
 
 .upload-button {
@@ -104,4 +129,8 @@
   cursor: pointer;
   font-weight: bold;
   margin-top: 10px;
+}
+
+.upload-button:hover {
+  background-color: #007ac1;
 }

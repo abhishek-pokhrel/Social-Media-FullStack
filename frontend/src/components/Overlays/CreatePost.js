@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import './CreatePost.css';
 
-const CreatePost = ({ setShowCreatePost }) => {
+const CreatePost = ({ setShowCreatePost, userId }) => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [caption, setCaption] = useState('');
   const fileInputRef = useRef(null);
 
   const handleFileSelect = () => {
@@ -20,6 +21,35 @@ const CreatePost = ({ setShowCreatePost }) => {
     }
   };
 
+  const handleUpload = async () => {
+    if (!selectedImage) {
+      alert('Please select an image to upload');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('images', fileInputRef.current.files[0]);
+    formData.append('caption', caption);
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/post/create/${userId}`, {
+        method: 'POST',
+        body: formData,
+        credentials: 'include', // Include credentials in the request
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Post created successfully:', data);
+        setShowCreatePost(false);
+      } else {
+        console.error('Failed to create post');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
   return (
     <div className="create-post-overlay">
       <div className="create-post">
@@ -27,7 +57,7 @@ const CreatePost = ({ setShowCreatePost }) => {
           <h3>Create new post</h3>
           <button className="close-btn" onClick={() => setShowCreatePost(false)}>X</button>
         </div>
-        <div className="content">
+        <div className="createpost-content">
           <div className="icon-container">
             <i className="icon">📷</i>
           </div>
@@ -41,12 +71,18 @@ const CreatePost = ({ setShowCreatePost }) => {
             onChange={handleFileChange}
           />
           {selectedImage && (
-            <div className="image-preview">
+            <div className="createpost-image-preview">
               <img src={selectedImage} alt="Selected" />
             </div>
           )}
+          <textarea
+            className="caption-input"
+            placeholder="Write a caption..."
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+          />
         </div>
-        <button className='upload-button'>Upload</button>
+        <button className='upload-button' onClick={handleUpload}>Upload</button>
       </div>
     </div>
   );
