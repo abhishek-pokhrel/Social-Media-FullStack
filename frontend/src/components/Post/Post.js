@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./Post.css";
 import profilePicture from './picture.jpg';
 import { useNavigate } from "react-router-dom";
+import like from '../Profile/like.png'
+import liked from '../Profile/liked.png'
+import comment from '../Profile/comment.png'
 
 function Post({ userid, post }) {
 
@@ -116,14 +119,14 @@ function Post({ userid, post }) {
           ⚙️
         </button>
       </div>
-      <img src={profilePicture} className="post-image" alt="" />
+      <img src={`http://` + post.image[0]} className="post-image" alt="" />
       <div className="post-content">
         <div className="reaction-wrapper">
           <button className="like-button icon" onClick={handleLikeClick}>
-            {isLiked ? '❤️' : '🤍'}
+            {isLiked ? (<img className="like-button" src={liked} alt="Liked" />) : (<img className="like-button" src={like} alt="Like" />)}
           </button>
-          <button className="comment-button icon">💬</button>
-          <button className="save-button icon">📘</button>
+          <button className="comment-button-box icon"><img className="comment-button" src={comment} /></button>
+          <button className="bookmark-button-box icon">📘</button>
         </div>
         <p className="likes">{likes} {likes <= 1 ? 'like' : 'likes'}</p>
         <p className="description">

@@ -26,7 +26,7 @@ const createPostController=async(req,res,next)=>{
 }
 
 const generateFileUrl=(filename)=>{
-    return process.env.URL+`/uploads/${filename}`
+    return `localhost:5000`+`/uploads/${filename}`
 }
 
 const createPostWithImagesController=async(req,res,next)=>{

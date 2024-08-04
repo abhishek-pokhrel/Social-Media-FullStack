@@ -11,7 +11,7 @@ import comment from './comment.png';
 
 function Profile() {
 
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(''); 
 
   const resetState = () => {
     setIsLiked(null);
@@ -74,6 +74,7 @@ function Profile() {
 
   const [isLiked, setIsLiked] = useState(null);
   const [likes, setLikes] = useState(null);
+  const [postImage, setPostImage] = useState(`http://localhost:5000/uploads/defaultPost.png`);
   const [timeDiff, setTimeDiff] = useState(null);
   const [comments, setComments] = useState([]);
 
@@ -142,12 +143,14 @@ function Profile() {
   const headersList = { Accept: "*/*" };
 
   const handleOverlay = async (post) => {
+    console.log(post);
     const commentsAPI = `http://localhost:5000/api/comment/post/${post.post._id}`;
     const userAPI = `http://localhost:5000/api/user/${post.post.user}`;
   
     setTimeDiff(calculateTimeDifference(post));
     setIsLiked(post.post.likes.includes(myInfo._id));
     setLikes(post.post.likes.length);
+    setPostImage(post.post.image[0])
     setOverlayPost(post);
   
     try {
@@ -253,6 +256,7 @@ function Profile() {
           const postsResponses = await Promise.all(postsPromises);
           const userPosts = postsResponses.map((res) => res.data);
           setUserAllPosts(userPosts);
+          console.log(userAllPosts)
         }
       }
     };
@@ -310,9 +314,9 @@ function Profile() {
                   myAllPosts.map((post, index) => (
                     <div className="gallery-item" tabIndex={0} key={index} onClick={() => handleOverlay(post)}>
                       <img
-                        src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
+                        src={`http://` + post.post.image[0]}
                         className="gallery-image"
-                        alt=""
+                        alt="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
                       />
                       <div className="gallery-item-info">
                         <ul>
@@ -332,7 +336,7 @@ function Profile() {
                   <p>No posts to display</p>
                 )}
               </div>
-              <div className="loader" />
+              
             </div>
           </main>
         </>
@@ -384,7 +388,7 @@ function Profile() {
                     userAllPosts.map((post, index) => (
                       <div className="gallery-item" tabIndex={0} key={index} onClick={() => handleOverlay(post)}>
                         <img
-                          src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
+                          src={`http://` + post.post.image[0]}
                           className="gallery-image"
                           alt=""
                         />
@@ -457,9 +461,9 @@ function Profile() {
                     userAllPosts.map((post, index) => (
                       <div className="gallery-item" tabIndex={0} key={index} onClick={() => handleOverlay(post)}>
                         <img
-                          src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
+                          src={`http://` + post.post.image[0]}
                           className="gallery-image"
-                          alt=""
+                          alt="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
                         />
                         <div className="gallery-item-info">
                           <ul>
@@ -543,7 +547,7 @@ function Profile() {
           
           <div className="overlay-content" onClick={(e) => e.stopPropagation()}>
             <div className="overlay-image">
-              <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" alt="" />
+              <img src={`http://` + postImage} alt="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" />
             </div>
             <div className="overlay-details">
 
