@@ -3,17 +3,16 @@ import './Sidebar.css'
 import { useNavigate } from 'react-router-dom';
 import picture from './picture.jpg';
 
-function Sidebar({userInfo, showCreatePost, setShowCreatePost}) {
+function Sidebar({userInfo, showCreatePost, setShowCreatePost, setShowSearchPeople}) {
 
   const handleElementClick = () => {
     console.log(showCreatePost);
     setShowCreatePost(true);
   };
 
-  
-  
-
-
+  const handleElementClick2 = () => {
+    setShowSearchPeople(true);
+  }
 
   const navigate = useNavigate();
 
@@ -72,7 +71,7 @@ function Sidebar({userInfo, showCreatePost, setShowCreatePost}) {
         Home
       </a>
     </li>
-    <li>
+    <li onClick={handleElementClick2}>
       <a
         className="nav-link"
         href="#"

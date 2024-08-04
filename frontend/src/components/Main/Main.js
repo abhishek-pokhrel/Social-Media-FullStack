@@ -5,11 +5,14 @@ import axios from "axios";
 import NewsFeed from "../NewsFeed/NewsFeed";
 import Sidebar from "../Navbar/Sidebar";
 import CreatePost from "../Overlays/CreatePost";
+import SearchPeople from "../Overlays/SearchPeople";
 
 function Main({ setIsAuth }) {
 
 
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const [showSearchPeople, setShowSearchPeople] = useState(false);
+
 
   const handleCloseOverlay = () => {
     console.log(showCreatePost);
@@ -82,7 +85,8 @@ function Main({ setIsAuth }) {
   return (
     <div className="profile-main">
       {showCreatePost && <CreatePost setShowCreatePost={setShowCreatePost} />}
-      <Sidebar userInfo={userInfo} setShowCreatePost={setShowCreatePost}/>
+      {showSearchPeople && <SearchPeople setShowSearchPeople={setShowSearchPeople} />}
+      <Sidebar userInfo={userInfo} setShowCreatePost={setShowCreatePost} setShowSearchPeople={setShowSearchPeople}/>
       <NewsFeed userInfo={userInfo} followingUsersPosts={followingUsersPosts} />
     </div>
   );
