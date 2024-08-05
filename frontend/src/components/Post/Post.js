@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import like from '../Profile/like.png'
 import liked from '../Profile/liked.png'
 import comment from '../Profile/comment.png'
+import bookmark from '../Profile/bookmark.png'
+import bookmarked from '../Profile/bookmarked.png'
+
 
 function Post({ userid, post }) {
 
@@ -13,6 +16,7 @@ function Post({ userid, post }) {
   const [isLiked, setIsLiked] = useState(post.likes.includes(userid));
   const [likes, setLikes] = useState(post.likes.length);
   const [username, setUsername] = useState('');
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false); // New state for options button
 
   const handlePostOption = () => {
@@ -126,7 +130,7 @@ function Post({ userid, post }) {
             {isLiked ? (<img className="like-button" src={liked} alt="Liked" />) : (<img className="like-button" src={like} alt="Like" />)}
           </button>
           <button className="comment-button-box icon"><img className="comment-button" src={comment} /></button>
-          <button className="bookmark-button-box icon">📘</button>
+          <button onClick={(event)=> {setIsBookmarked(!isBookmarked)}} className="bookmark-button-box icon"><img className="bookmark-button" src={ isBookmarked ? bookmarked : bookmark} /></button>
         </div>
         <p className="likes">{likes} {likes <= 1 ? 'like' : 'likes'}</p>
         <p className="description">

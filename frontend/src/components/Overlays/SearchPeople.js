@@ -1,40 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import './SearchPeople.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./SearchPeople.css";
+import { useNavigate } from "react-router-dom";
 
 const SearchPeople = ({ setShowSearchPeople }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (searchQuery.trim() === '') {
+      if (searchQuery.trim() === "") {
         setSearchResults([]);
         return;
       }
 
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:5000/api/auth/search', {
-          method: 'POST',
+        const response = await fetch("http://localhost:5000/api/auth/search", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          credentials: 'include', // Include credentials
+          credentials: "include", // Include credentials
           body: JSON.stringify({ searchInput: searchQuery }),
         });
 
         const data = await response.json();
         if (Array.isArray(data)) {
           setSearchResults(data);
-          console.log(searchResults)
+          console.log(searchResults);
         } else {
           setSearchResults([]);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         setSearchResults([]);
       } finally {
         setLoading(false);
@@ -53,7 +53,12 @@ const SearchPeople = ({ setShowSearchPeople }) => {
       <div className="search-people">
         <div className="header">
           <h3>Search People</h3>
-          <button className="close-btn" onClick={() => setShowSearchPeople(false)}>X</button>
+          <button
+            className="close-btn"
+            onClick={() => setShowSearchPeople(false)}
+          >
+            X
+          </button>
         </div>
         <div className="content">
           <input
@@ -68,7 +73,15 @@ const SearchPeople = ({ setShowSearchPeople }) => {
               <div className="loader"></div>
             ) : searchResults.length > 0 ? (
               searchResults.map((result) => (
-                <p onClick={()=> {navigate(`/${result._id}`)}} key={result._id}>{result.username}</p>
+                <p
+                  onClick={() => {
+                    navigate(`/${result._id}`);
+                    setShowSearchPeople(false);
+                  }}
+                  key={result._id}
+                >
+                  {result.username}
+                </p>
               ))
             ) : (
               <p className="no-results">No results found</p>

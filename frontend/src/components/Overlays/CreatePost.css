@@ -111,13 +111,17 @@
 }
 
 .caption-input {
-  width: 90%;
-  margin-top: 20px;
+  width: 100%;
+  height: 70px;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #ddd;
   border-radius: 5px;
   resize: none;
   font-family: Arial, sans-serif;
+  overflow-y: hidden;
 }
 
 .upload-button {
@@ -133,4 +137,34 @@
 
 .upload-button:hover {
   background-color: #007ac1;
+}
+
+
+.caption-container {
+  width: 80%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 1rem;
+}
+
+.caption-input {
+  flex: 1;
+}
+
+.emoji-picker-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  scale: 120%;
+}
+
+.emoji-picker {
+  position: fixed;
+  top: 20%;
+  right: 20%;
+  scale: 80%;
+  z-index: 10;
 }

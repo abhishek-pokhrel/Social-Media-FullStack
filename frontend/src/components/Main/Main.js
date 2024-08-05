@@ -63,7 +63,7 @@ function Main({ setIsAuth }) {
 
         const postsResponses = await Promise.all(postsPromises);
         const allPosts = postsResponses.flatMap((res) => res.data.posts);
-        setFollowingUsersPosts(allPosts);
+        setFollowingUsersPosts(allPosts.reverse());
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -87,7 +87,7 @@ function Main({ setIsAuth }) {
       {showCreatePost && <CreatePost setShowCreatePost={setShowCreatePost} userId={userInfo._id}/>}
       {showSearchPeople && <SearchPeople setShowSearchPeople={setShowSearchPeople} />}
       <Sidebar userInfo={userInfo} setShowCreatePost={setShowCreatePost} setShowSearchPeople={setShowSearchPeople}/>
-      <NewsFeed userInfo={userInfo} followingUsersPosts={followingUsersPosts} />
+      <NewsFeed userInfo={userInfo} followingUsersPosts={followingUsersPosts}/>
     </div>
   );
 }

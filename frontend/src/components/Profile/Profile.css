@@ -541,6 +541,9 @@ img {
     /* background-color: rgb(210, 210, 210); */
   }
 
+  main {
+    margin-top: 2rem;
+  }
   
   .comments-container li {
       padding: 0.2rem;

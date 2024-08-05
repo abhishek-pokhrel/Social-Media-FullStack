@@ -16,6 +16,9 @@ import Profile from './components/Profile/Profile';
 const App = () => {
   
   const [isAuth, setIsAuth] = useState(false);
+
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const [showSearchPeople, setShowSearchPeople] = useState(false);
   
   const handleRefetch = async () => {
     try {
@@ -36,7 +39,7 @@ const App = () => {
       <div className="App">
         <Routes>
 
-        <Route path="/:profileId" element={isAuth ? (<Profile />): (<Home />)} />
+        <Route path="/:profileId" element={isAuth ? (<Profile showCreatePost={showCreatePost} showSearchPeople={showSearchPeople} setShowCreatePost={setShowCreatePost} setShowSearchPeople={setShowSearchPeople}/>): (<Home />)} />
 
           <Route path="/" element={isAuth ? (<Main setIsAuth={setIsAuth}/> ): (<Home />)} />
 

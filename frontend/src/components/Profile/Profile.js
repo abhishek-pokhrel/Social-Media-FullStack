@@ -7,9 +7,11 @@ import Sidebar from '../Navbar/Sidebar';
 import like from './like.png';
 import liked from './liked.png';
 import comment from './comment.png';
+import CreatePost from '../Overlays/CreatePost';
+import SearchPeople from '../Overlays/SearchPeople';
 
 
-function Profile() {
+function Profile({setShowCreatePost, setShowSearchPeople, showCreatePost, showSearchPeople}) {
 
   const [username, setUsername] = useState(''); 
 
@@ -216,7 +218,7 @@ function Profile() {
 
         const postsResponses = await Promise.all(postsPromises);
         const myPosts = postsResponses.map((res) => res.data);
-        setMyAllPosts(myPosts);
+        setMyAllPosts(myPosts.reverse());
 
         const reqOptions = {
           url: `http://localhost:5000/api/user/${profileId}`,
@@ -255,7 +257,7 @@ function Profile() {
 
           const postsResponses = await Promise.all(postsPromises);
           const userPosts = postsResponses.map((res) => res.data);
-          setUserAllPosts(userPosts);
+          setUserAllPosts(userPosts.reverse());
           console.log(userAllPosts)
         }
       }
@@ -270,9 +272,11 @@ function Profile() {
 
   return (
     <>
+    {showCreatePost && <CreatePost setShowCreatePost={setShowCreatePost} userId={userInfo._id}/>}
+    {showSearchPeople && <SearchPeople setShowSearchPeople={setShowSearchPeople} />}
       {isMine ? (
         <>
-          <Sidebar userInfo={myInfo} />
+          <Sidebar userInfo={myInfo} setShowCreatePost={setShowCreatePost} setShowSearchPeople={setShowSearchPeople}/>
           <header>
             <div className="container">
               <div className="profile">
@@ -307,6 +311,7 @@ function Profile() {
               </div>
             </div>
           </header>
+          <hr />
           <main>
             <div className="container">
               <div className="gallery">
@@ -343,7 +348,7 @@ function Profile() {
       ) : (
         userInfo.isPrivate[0] === false ? (
           <>
-            <Sidebar userInfo={myInfo} />
+          <Sidebar userInfo={myInfo} setShowCreatePost={setShowCreatePost} setShowSearchPeople={setShowSearchPeople}/>
             <header>
               <div className="container">
                 <div className="profile">
@@ -381,6 +386,7 @@ function Profile() {
                 </div>
               </div>
             </header>
+            <hr />
             <main>
               <div className="container">
                 <div className="gallery">
@@ -410,13 +416,12 @@ function Profile() {
                     <p>No posts to display</p>
                   )}
                 </div>
-                <div className="loader" />
               </div>
             </main>
           </>
         ) : userInfo.followers.includes(myInfo._id) ? (
           <>
-            <Sidebar userInfo={myInfo} />
+            <Sidebar userInfo={myInfo} setShowCreatePost={setShowCreatePost} setShowSearchPeople={setShowSearchPeople}/>
             <header>
               <div className="container">
                 <div className="profile">
@@ -454,6 +459,7 @@ function Profile() {
                 </div>
               </div>
             </header>
+            <hr />
             <main>
               <div className="container">
                 <div className="gallery">
@@ -483,13 +489,12 @@ function Profile() {
                     <p>No posts to display</p>
                   )}
                 </div>
-                <div className="loader" />
               </div>
             </main>
           </>
         ) : (
           <>
-            <Sidebar userInfo={myInfo} />
+          <Sidebar userInfo={myInfo} setShowCreatePost={setShowCreatePost} setShowSearchPeople={setShowSearchPeople}/>
             <header>
               <div className="container">
                 <div className="profile">
@@ -535,7 +540,6 @@ function Profile() {
                     <h4>Follow this account to see their posts.</h4>
                   </div>
                 </div>
-                <div className="loader" />
               </div>
             </main>
           </>
